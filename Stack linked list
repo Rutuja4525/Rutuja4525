@@ -1,0 +1,89 @@
+#include<stdio.h>
+#include<malloc.h>
+struct node
+{
+	int data;
+	struct node *next;
+}*head=NULL;
+int main()
+{
+	int cho,num;
+	while(1)
+	{
+		printf("\n1.Push");
+		printf("\n2.Pop");
+		printf("\n3.Display");
+		printf("\n4.Peek");
+		printf("\n5.Exit");
+		
+		printf("\nEnter your choice:");
+		scanf("%d",&cho);
+		
+		if(cho==1)
+		{
+			printf("\nEnter number for insert:");
+			scanf("%d",&num);
+			push(num);
+		}
+		else if(cho==2)
+		{
+			pop();
+
+		}
+		else if(cho==3)
+		{
+			display();
+		}
+		else if(cho==4)
+		{
+			peek();
+		}
+		else if(cho==5)
+		{
+			return 1;
+		}
+	}	
+}
+int push(int data)
+{
+	struct node *tmp;
+
+	tmp=malloc(sizeof(struct node*));
+	tmp->data=data;
+	tmp->next=NULL;
+
+	if(head==NULL)
+	{
+		head=tmp;
+	}
+	else
+	{
+		tmp->next=head;
+		head=tmp;
+		
+	}
+}
+void display()
+{
+	struct node *q;
+	q=head;
+	while(q!=NULL)
+	{
+
+		printf("%d\t",q->data);
+		q=q->next;
+	}
+}
+int pop()
+{
+	struct node *tmp;
+	tmp=head;
+	
+	head=head->next;
+	printf("Deleted %d",tmp->data);
+	free(tmp);
+}
+void peek()
+{
+	printf("%d",head->data);
+}

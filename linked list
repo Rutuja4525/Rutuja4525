@@ -1,0 +1,267 @@
+#include<stdio.h>
+#include<malloc.h>
+struct node
+{
+	int info;
+	struct node *link;
+}*start;
+int main()
+{
+	int cho,i,m,n,k,s,md,d,e;
+	do
+	{
+		printf("\n1. Create list OR Add at end ");
+		printf("\n2. Display data ");
+		printf("\n3. Search data ");
+		printf("\n4. Add at begining ");
+		printf("\n5. Add at middle ");
+		printf("\n6. Delete data ");
+		printf("\n7. Edit data");
+		printf("\n8. Exit ");
+
+		printf("\n Enter choice : ");
+		scanf("%d",&cho);
+
+	if(cho==1)
+	{
+		start=NULL;
+		printf("\n How many nodes you want to add : ");
+		scanf("%d",&n);
+		for(i=0;i<n;i++)
+		{
+			printf("Enter Element : ");
+			scanf("%d",&m);
+			create_list(m);
+		}
+	}
+	else if(cho==2)
+	{
+		display();
+	}
+	else if(cho==3)
+    {
+        printf("\n Enter number to search : ");
+		scanf("%d",&s);
+		searchinfo(s);
+    }
+	else if(cho==4)
+	{
+		printf("\n Enter number to add at begining : ");
+		scanf("%d",&k);
+		addatbeg(k);
+	}
+	else if(cho==5)
+    {
+        printf("\n Enter number to add at middle : ");
+		scanf("%d",&md);
+		middleinfo(md);
+    }
+    else if(cho==6)
+    {
+        printf("\n Enter number to delete : ");
+		scanf("%d",&d);
+		deleteinfo(d);
+    }
+    else if(cho==7)
+    {
+        printf("\n Enter number to edit");
+        scanf("%d",&e);
+        editinfo(e);
+    }
+
+}while(cho>=1 && cho<=8);
+}
+int create_list(int data)
+{
+	struct node *q,*tmp;
+	tmp=malloc(sizeof(struct node));
+	tmp->info=data;
+	tmp->link=NULL;
+	if(start==NULL)
+	start=tmp;
+	else
+	{
+		q=start;
+		while(q->link!=NULL)
+		{
+			q=q->link;
+		}
+		q->link=tmp;
+	}
+}
+int display()
+{
+	struct node *q;
+	if(start==NULL)
+	{
+		printf("\n List is empty\n");
+		return;
+	}
+	q=start;
+	while(q!=NULL)
+	{
+		printf("%d\t",q->info);
+		q=q->link;
+	}
+}
+int searchinfo(int packet)
+{
+    struct node *q;
+    int flag=0;
+    if(start==NULL)
+    {
+        printf("\n List is empty\n");
+        return;
+    }
+    q=start;
+    while(q!=NULL)
+    {
+        if(q->info==packet)
+        {
+            printf("\nNumber is found %d\t\n",q->info);
+            flag=1;
+        }
+        q=q->link;
+    }
+    if(flag==0)
+    {
+       printf("\nNumber is not found");
+    }
+
+}
+int addatbeg(int data)
+{
+	struct node *tmp;
+	tmp=malloc(sizeof(struct node));
+	tmp->info=data;
+	if(start==NULL)
+	{
+		start=tmp;
+		tmp->link=NULL;
+	}
+	else
+	{
+		tmp->link=start;
+		start=tmp;
+	}
+}
+
+int deleteinfo(int data)
+{
+    struct node *q;
+    int x=0;
+    if(start==NULL)
+    {
+        printf("\n List is empty\n");
+        return;
+    }
+    q=start;
+    while(q!=NULL)
+    {
+        if(q->info==data)
+        {
+           start=q->link;
+           x=1;
+        }
+       else if (q->link->info==data);
+       {
+           q->link=q->link->link;
+           x=1;
+       }
+       q=q->link;
+    }
+    if(x==0)
+    {
+        printf("\n Data not found!");
+    }
+}
+int middleinfo(int newdata)
+{
+    int pos=1;
+	int npos;
+    printf("\n Enter postion to insert data");
+    scanf("%d",&npos);
+
+    struct node *q,*tmp;
+    tmp=malloc(sizeof(struct node));
+	tmp->info=newdata;
+	tmp->link=NULL;
+	if(start==NULL)
+	{
+	start=tmp;
+	tmp->link=NULL;
+    }
+	else
+	{
+		q=start;
+		while(q->link!=NULL)
+        {
+            if(pos==npos-1)
+            {
+                tmp->link=q->link;
+                q->link=tmp;
+                break;
+            }
+            q=q->link;
+            pos++;
+        }
+	}
+}
+int editinfo(int data)
+{
+    int dt;
+    printf("\n Enter newdata");
+    scanf("%d",&dt);
+
+    struct node *q;
+    int x=0;
+        if(start==NULL)
+    {
+        printf("\n List is empty\n");
+        return;
+    }
+    q=start;
+    while(q!=NULL)
+    {
+        if(q->info==data)
+        {
+          q->info==data;
+          x=1;
+        }
+        q=q->link;
+    }
+    if(x==0)
+        printf("\n NUmber not found");
+}
+/*
+int middleinfo(int newdata)
+{
+    int dt;
+    printf("\n Enter data after which you want to insert:");
+    scanf("%d",:&dt);
+
+    struct node *q,*tmp;
+    tmp=malloc(sizeof(struct node));
+	tmp->info=data;
+	tmp->link=NULL;
+	if(start==NULL)
+	start=tmp;
+	tmp->link=NULL;
+	else
+	{
+		q=start;
+		while(q->link!=NULL)
+		{
+		    if(q->info==dt)
+            {
+                tmp->link=q->link;
+                q->link=tmp;
+                break;
+            }
+            else
+            q=q->link;
+        }
+	}
+
+}
+*/

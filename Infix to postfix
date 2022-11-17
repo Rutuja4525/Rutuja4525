@@ -1,0 +1,93 @@
+#include<stdio.h>
+#include<string.h>
+int push(char *stk,int top,char ch)
+{
+	top++;
+	stk[top] = ch;
+	return top;
+}
+int pop(int top)
+{
+	top--; 
+	return top;
+}
+char peek(char *stk,int top)
+{
+	char ch = stk[top];
+	return ch;
+}
+int isEmpty(int top)
+{
+	if(top == -1)
+		return 0;
+	return 1;
+}
+int prec(char ch)
+{
+	if(ch == '^')
+		return 3;
+	else if(ch == '*' || ch == '/')
+		return 2;
+	else if(ch == '+' || ch == '-')
+		return 1;
+	else
+		return 0;
+}
+int main()
+{
+	char str[100],ans[100],stk[100];
+	int i=0,j=0,n,top = -1;
+	
+	printf("\n Enter string : ");
+	gets(str);
+	
+	n = strlen(str);
+	for(i=0;i<n;i++)
+	{
+		if(isalpha(str[i]))
+		{
+			ans[j] = str[i]; 
+			j++;
+		}
+		else if(str[i] == '(')
+		{
+			top = push(stk,top,'(');
+		}
+		else if(str[i] == ')')
+		{
+			while(isEmpty(top) == 1 && peek(stk,top) != '(')
+			{
+				char ch = peek(stk,top);
+				top = pop(top);
+				ans[j] = ch; // to store
+				j++;
+			}
+			top = pop(top);
+		}
+		else
+		{
+			while(isEmpty(top) == 1 && prec(str[i]) <= prec(peek(stk,top)))
+			{
+				char ch = peek(stk,top);
+				top = pop(top);
+				ans[j] = ch;
+				j++;
+			}
+			top = push(stk,top,str[i]);
+		}
+	}
+	while(isEmpty(top))
+	{
+		char ch = peek(stk,top);
+		top = pop(top);
+	
+		ans[j] = ch;
+		j++;
+		
+	}
+	
+	int k = strlen(ans);
+	for(i=0;i<k-. ;i++)
+		printf("%c ",ans[i]);
+}
+// a*b+(c/d/m)-e^f

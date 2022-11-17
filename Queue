@@ -1,0 +1,85 @@
+#include<stdio.h>
+# define MAX 5
+ 
+ int main()
+ {
+ 	int queue_arr[MAX];
+ 	int rear=-1;
+ 	int front=-1;
+ 	int cho,num;
+ 	while(1)
+ 	{
+ 		printf("\n1.Add");
+ 		printf("\n2.Delete");
+ 		printf("\n3.Display");
+ 		printf("\n4.Exit");
+ 		printf("\nEnter your choice");
+ 		scanf("%d",&cho);
+ 		
+ 		if(cho==1)
+ 		{
+		 	printf("\nEnter number");
+ 		    scanf("%d",&num);	
+ 		    insert(&queue_arr,&rear,&front,num);
+		}
+		else if(cho==2)
+		delete(&queue_arr,&rear,&front);
+		else if(cho==3)
+		display(&queue_arr,rear,front);
+		else if(cho==4)
+		return 1;
+    }
+ }
+int insert(int *queue_arr,int *rear,int *front,int num)
+ {
+ 	if(*front == -1 && *rear == -1)
+ 	{
+ 		*front=*front+1;
+ 		*rear=*rear+1;
+ 		*(queue_arr + *rear)=num;
+    }
+    else
+    {
+    	if(*rear == MAX-1)
+    	{
+    		printf("\nQueue is full");
+    		return 0; 
+		}
+		else
+		{
+			*rear=*rear+1;
+			*(queue_arr + *rear)=num;
+		}
+	}
+ }
+int delete(int *queue_arr,int *rear,int *front)
+ {
+ 	if(*front == -1)
+ 	{
+ 		printf("\nQueue is empty");
+	}
+	else
+	{
+		printf("\n%d deleted",*(queue_arr + *front));
+		(*front)++;
+		if(*front == MAX)
+		{
+			*front=-1;
+ 			*rear=-1;;
+		}
+	}
+ }
+ 
+ int display(int *queue_arr,int rear,int front)
+ {
+ 	int i;
+ 	if(front == -1 || front == MAX-1)
+ 	printf("\nQueue is empty");
+ 	else
+ 	{
+ 		for(i=front;i<=rear;i++)
+ 		{
+ 			printf("\t%d",*(queue_arr + i));
+		}
+	}
+ }

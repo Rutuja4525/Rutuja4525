@@ -1,0 +1,93 @@
+#include<stdio.h>
+#include<malloc.h>
+struct node
+{
+	int info;
+	struct node *link;
+}*front,*rear;
+int main()
+{
+	int cho,i,m,n;
+	do
+	{
+		printf("\n1. Create list OR Add at end ");
+		printf("\n2. Delete data ");
+		printf("\n3. Display data ");
+		
+		printf("\n Enter choice : ");
+		scanf("%d",&cho);
+
+	if(cho==1)
+	{
+		front=NULL;
+		printf("\n How many nodes you want to add : ");
+		scanf("%d",&n);
+		for(i=0;i<n;i++)
+		{
+			printf("Enter Element : ");
+			scanf("%d",&m);
+			create_list(m);
+		}
+	}
+	else if(cho==3)
+	{
+		display();
+	}
+	
+    else if(cho==2)
+    {
+		deleteinfo();
+    }
+}while(cho>=1 && cho<=3);
+}
+int create_list(int data)
+{
+	struct node *tmp;
+	tmp=malloc(sizeof(struct node));
+	tmp->info=data;
+	tmp->link=NULL;
+	if(front==NULL)
+	front=tmp;
+	else
+	{
+		rear=front;
+		while(rear->link!=NULL)
+		{
+			rear=rear->link;
+		}
+		rear->link=tmp;
+	}
+}
+int display()
+{
+
+	if(front==NULL)
+	{
+		printf("\n List is empty\n");
+		return;
+	}
+	rear=front;
+	while(rear->link!=NULL)
+	{
+		printf("%d\t",rear->info);
+		rear=rear->link;
+	}
+}
+
+int deleteinfo()
+{
+
+    
+    if(front==NULL)
+    {
+        printf("\n List is empty\n");
+        return;
+    }
+    rear=front;
+    while(rear->link!=NULL)
+    {
+        
+       rear=rear->link;
+    }
+    
+}

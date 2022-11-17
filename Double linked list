@@ -1,0 +1,121 @@
+#include<stdio.h>
+#include<malloc.h>
+struct node
+{
+	int data;
+	struct node*next,*prev;
+	
+}*head;
+
+int main()
+{
+
+	int n,i,cho;
+	head=NULL;
+
+	while(1)
+	{
+		printf("\n1.create list");
+		printf("\n2.Display");
+		printf("\n3.Insert at begining");
+		printf("\n4.Insert at position");
+		printf("\n5.Delete node");
+		printf("\n6.Exit");	
+	
+		printf("\nEnter your choice: ");
+		scanf("%d",&cho);
+
+
+	if(cho==1)
+	{
+	struct node *q,*tmp;
+	tmp=(struct node*)malloc(sizeof(struct node *));
+	
+	
+	printf("Enter number: ");
+	scanf("%d",&n);
+	tmp->data=n;
+	tmp->next=NULL;
+
+	
+	if(head==NULL)
+	{
+		tmp->next=NULL;
+		tmp->prev=NULL;
+		head=tmp;
+	}
+	else
+	{
+		q=head;
+		while(q->next!=NULL)
+		{
+	
+			q=q->next;
+		}		
+		q->next=tmp;
+		tmp->prev=q;
+	}
+
+}
+else if(cho==2)
+{
+	struct node *q;
+	q=head;
+    while(q!= NULL)
+    {
+     printf("%d \t",q->data);
+     q=q->next;
+    }
+}
+else if(cho==3)
+{
+	struct node *q,*tmp;
+	tmp=(struct node*)malloc(sizeof(struct node *));
+	
+	printf("Enter number: ");
+	scanf("%d",&n);
+	tmp->data=n;
+	tmp->next=NULL;
+	
+	if(head==NULL)
+	{
+		tmp->prev=NULL;
+		head=tmp;
+	}
+	else
+	{
+		tmp->prev=NULL;
+		tmp->next=head;
+		head=tmp;
+		head->prev=NULL;
+	}
+}
+else if(cho==4)
+{
+	int pos,i;
+	printf("Enter position:");
+	scanf("%d",&pos);
+	struct node *q,*tmp;
+	tmp=(struct node*)malloc(sizeof(struct node *));
+	
+	q=head;
+	printf("Enter number: ");
+	scanf("%d",&n);
+	tmp->data=n;
+	tmp->next=NULL;
+	
+	for(i=0;i<pos-1;i++)
+	{
+		q=q->next;
+	}
+	
+	tmp->next=q->next;
+	tmp->prev=q;
+	q->next->prev=tmp;
+	q->next=tmp;
+}
+
+
+
+}
+}

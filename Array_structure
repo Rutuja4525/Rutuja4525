@@ -1,0 +1,85 @@
+#include<stdio.h>
+int main()
+{
+	int arr[100],a,b,c,cho,totele=0,tmpno,xyz;
+	do
+	{
+		printf("\n1. Add data");
+		printf("\n2. Display Number");
+		printf("\n3. Search Number");
+		printf("\n4. Insert Number");
+		printf("\n5. Delete Number");
+		printf("\n6. Exit");
+		
+		printf("\nEnter your choice:  ");
+		scanf("%d",&cho);
+		
+		if(cho==1)
+		{
+			printf("\nHow many numbers you want to add: ");
+			scanf("%d",&a);
+			a=a+totele;
+			for(b=totele;b<a;b++)
+			{
+				printf("Enter number:");
+				scanf("%d",&arr[b]);
+				totele++;
+			}
+		}
+		else
+		if(cho==2)
+		{
+		   for(c=0;c<totele;c++)
+    	   {
+    	   	printf("\t%d",arr[c]);
+			}  
+			
+	    }
+	    else
+	    if(cho==3)
+	    {
+	    	int xyz=0;
+	    	printf("Enter number to search: ");
+	    	scanf("%d",&tmpno);
+	    	for(c=0;c<totele;c++)
+	    	{
+	    		if(tmpno==arr[c])
+	    		{
+	    			printf("\t%d found",arr[c]);
+					xyz=1;
+				}
+		    }
+		    if(xyz==0)
+			  printf("\nNot found\n");
+
+			getch();
+		}
+		else
+		if(cho==4)
+		{
+			int size,num,index;
+			printf("Enter number to insert and index pos.: ");
+			scanf("%d%d",&num,&index);
+            size=totele;	
+			for(c=size-1;c>=index;c--)
+			{
+			   arr[c+1]=arr[c];
+		    }
+			arr[index]=num;
+			totele++;
+		}
+		else
+		if(cho==5)
+		{   
+        	int size,index;
+			printf("which index value you want to delete: ");
+			scanf("%d",&index);
+			size=totele;		
+			for(c=index;c<=size;c++)   
+			arr[c]=arr[c+1];
+			totele--;
+		}
+		
+    }while(cho>=1 && cho<6);
+
+}

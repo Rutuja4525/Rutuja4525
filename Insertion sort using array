@@ -1,0 +1,26 @@
+#include<stdio.h>
+#define MAX 5
+int main()
+{
+  int arr[MAX],i,j,k;
+  for(i=0;i<MAX;i++)
+  {
+      printf("Enter Element  ");
+      scanf("%d",&arr[i]);
+  }
+
+/* Insertion sort */
+  for(j=1;j<MAX;j++)
+  {
+      k=arr[j];
+      for(i=j-1;i>=0 && k <arr[i];i--)
+      {
+          arr[i+1]=arr[i];
+      }
+      arr[i+1]=k;
+  }
+
+  for(i=0;i<MAX;i++)
+    printf("\t%d",arr[i]);
+
+}

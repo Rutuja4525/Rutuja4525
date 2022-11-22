@@ -1,93 +1,93 @@
 #include<stdio.h>
-#include<malloc.h>
+
 struct node
 {
-	int info;
-	struct node *link;
+int data;
+struct node* next;
 }*front,*rear;
+
+void enqueue(int no)
+{
+struct node *tmp;
+tmp = malloc(sizeof(struct node*));
+tmp->data = no;
+tmp->next = NULL;
+
+if(front == NULL && rear == NULL)
+{
+front = tmp;
+rear = tmp;
+}
+else
+{
+rear->next = tmp;
+rear = tmp;
+}
+printf("\n Inserted ");
+}
+
+void dequeue()
+{
+if(front == NULL && rear == NULL)
+{
+printf("\n Queue is empty");
+return;
+}
+else if(front == rear)
+{
+printf("%d deleted ",front->data);
+front = NULL;
+rear = NULL;
+}
+else
+{
+struct node *tmp;
+tmp = front;
+front = front->next;
+
+printf("\n %d Deleted ",tmp->data);
+free(tmp);	
+}
+
+}
+void display()
+{
+struct node *tmp = front;
+while(tmp != NULL)
+{
+printf("%d ",tmp->data);
+tmp=tmp->next;
+}
+}
 int main()
 {
-	int cho,i,m,n;
-	do
-	{
-		printf("\n1. Create list OR Add at end ");
-		printf("\n2. Delete data ");
-		printf("\n3. Display data ");
-		
-		printf("\n Enter choice : ");
-		scanf("%d",&cho);
-
-	if(cho==1)
-	{
-		front=NULL;
-		printf("\n How many nodes you want to add : ");
-		scanf("%d",&n);
-		for(i=0;i<n;i++)
-		{
-			printf("Enter Element : ");
-			scanf("%d",&m);
-			create_list(m);
-		}
-	}
-	else if(cho==3)
-	{
-		display();
-	}
-	
-    else if(cho==2)
-    {
-		deleteinfo();
-    }
-}while(cho>=1 && cho<=3);
-}
-int create_list(int data)
+front = NULL;
+rear = NULL;
+int cho,data;
+do
 {
-	struct node *tmp;
-	tmp=malloc(sizeof(struct node));
-	tmp->info=data;
-	tmp->link=NULL;
-	if(front==NULL)
-	front=tmp;
-	else
-	{
-		rear=front;
-		while(rear->link!=NULL)
-		{
-			rear=rear->link;
-		}
-		rear->link=tmp;
-	}
-}
-int display()
-{
+printf("\n 1. Enqueue ");
+printf("\n 2. Dequeue ");
+printf("\n 3. Display ");
+printf("\n 4. Exit");
 
-	if(front==NULL)
-	{
-		printf("\n List is empty\n");
-		return;
-	}
-	rear=front;
-	while(rear->link!=NULL)
-	{
-		printf("%d\t",rear->info);
-		rear=rear->link;
-	}
+printf("\n Enter choice : ");
+scanf("%d",&cho);
+
+if(cho == 1)
+{
+printf("\n Enter data : ");
+scanf("%d",&data);
+enqueue(data);
+}
+else if(cho == 2)
+{
+dequeue();
+}
+else if(cho == 3)
+{
+display();
 }
 
-int deleteinfo()
-{
-
-    
-    if(front==NULL)
-    {
-        printf("\n List is empty\n");
-        return;
-    }
-    rear=front;
-    while(rear->link!=NULL)
-    {
-        
-       rear=rear->link;
-    }
-    
+}while(cho != 4);
 }

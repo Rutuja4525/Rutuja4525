@@ -1,0 +1,41 @@
+#include<stdio.h>
+int main()
+{
+int arr[20],start,end,mid,n,i,item,ans;
+printf("How many elements you want to enter ");
+scanf("%d",&n);
+for(i=0;i<n;i++)
+{
+printf("Enter Element : ");
+scanf("%d",&arr[i]);
+}
+printf("Enter element to be searched   ");
+scanf("%d",&item);
+ans = binSearch(arr,0,n-1,item);
+if(ans==1)
+  printf("\nElement Found ");
+else
+ printf("\nElement Not Found ");
+ 
+}
+
+int binSearch(int arr[],int start,int end,int item)
+{
+int mid;
+
+mid = (start+end)/2;
+while(item != arr[mid] && start <= end)
+{
+if(item > arr[mid])
+ start=mid +1 ;
+else
+  end=mid-1;
+mid=(start+end)/2;
+}
+if(item==arr[mid])
+  return 1;
+if(start>end)
+  return 0;
+
+return 0;
+}

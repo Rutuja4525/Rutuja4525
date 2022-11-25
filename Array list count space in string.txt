@@ -1,0 +1,30 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Solution{
+    int space(String str){
+        int count=0;
+        for(int i=0;i<str.length();i++)
+        {
+            if(str.charAt(i)==' ')
+                count++;
+        }
+         return count;
+    }
+    public static void main(String[] args) {
+        int sum=0;
+        Scanner sc= new Scanner(System.in);
+        ArrayList <String> at= new ArrayList<String>();
+        at.add("Hellow i am rusikesh");
+        at.add("Hello  ");
+        at.add("H e l l l");
+
+        Solution s1= new Solution();
+        for(int j=0;j< at.size();j++)
+        {
+            sum=sum+s1.space(at.get(j));
+        }
+        System.out.println(sum);
+    }
+
+}

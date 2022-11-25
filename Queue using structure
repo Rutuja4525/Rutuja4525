@@ -1,0 +1,94 @@
+
+#include<stdio.h>
+#define MAX 5
+struct queue
+{
+  int f,r;
+  int items[MAX];
+};
+
+void initq1(struct queue *ptr)
+{
+  ptr->f = ptr->r = -1;
+}
+int isempty(struct queue *ptr)
+{
+  return (ptr->f == ptr->r);
+}
+
+int enq(struct queue *ptr,int ele)
+{
+  if(ptr->r == 5)
+    printf("\n Queue is Full \n");
+  else
+  {
+     if(ptr->f == -1)
+   ptr->f=ptr->f+1;  
+  
+   ptr->r = ptr->r+1;
+  ptr->items[ptr->r]=ele;
+  }
+   
+   
+}
+
+int dq(struct queue *ptr)
+{
+  int n;
+  n=ptr->items[(ptr->f)];
+  ptr->f = ptr->f+1;
+  return n;
+}
+void display(struct queue *ptr)
+{
+  int i;
+    for(i=ptr->f;i<=ptr->r;i++)
+    {
+      printf("%d\t",ptr->items[i]);
+    }
+}
+
+int main()
+{
+  struct queue q1;
+  initq1(&q1);
+  int cho,ele;
+ 
+  do
+  {
+    printf("\n1.Enqueue");
+    printf("\n2.Dequeue");
+    printf("\n3.Display");
+    printf("\n4.Exit");
+    printf("\nEnter Your Choice : ");
+    scanf("%d",&cho);
+   
+    if(cho==1)
+    {
+      printf("\n Enter Element to Enqueue : ");
+      scanf("%d",&ele);
+     
+      enq(&q1,ele);
+    }
+    else if(cho==2)
+    {
+      if(isempty(&q1))
+      {
+        printf("\n Queue is Empty\n");
+        initq1(&q1);
+      }
+      else
+        printf("\n %d Removed \n",dq(&q1));
+    }
+    else if(cho==3)
+    {
+      if(isempty(&q1))
+      {
+         printf("\n Queue is Empty\n");  
+      }
+      else
+        display(&q1);
+    }
+   
+   
+  }while(cho>=1 && cho<=3);

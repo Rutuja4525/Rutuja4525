@@ -1,0 +1,82 @@
+#include<stdio.h>
+#define MAX 5
+struct stack
+{
+	int top;
+	int items[MAX];
+};
+void inits(struct stack *ptr)
+{
+	ptr->top=-1;
+}
+int push(struct stack *ptr,int ele)
+{
+	if(ptr->top == MAX-1)
+		return -1;
+	else
+	{
+		ptr->top=ptr->top+1;
+		ptr->items[ptr->top]=ele;
+	}
+}
+int pop(struct stack *ptr)
+{
+	if(ptr->top == -1)
+		return -1;
+	else
+	{
+		int n;
+		n=ptr->items[(ptr->top)];
+		ptr->top=ptr->top-1;
+		return n;
+	}
+}
+void display(struct stack *ptr)
+{
+	int i;
+	if(ptr->top == -1)
+		printf("STACK IS EMPTY");
+	else
+	{
+		for(i=0;i<=ptr->top;i++)
+			printf("%d \t",ptr->items[i]);
+	}
+	
+}
+int main()
+{
+	struct stack s1;
+	inits(&s1);
+	int cho,num,ans;
+	while(1)
+	{
+		printf("\n1.PUSH");
+		printf("\n2.POP");
+		printf("\n3.DISPLAY");
+		printf("\n4.EXIT");
+		
+		printf("\nENTER YOUR CHIOCE: ");
+		scanf("%d",&cho);
+		
+		if(cho==1)
+		{
+			printf("ENTER ELEMENT:");
+			scanf("%d",&num);
+			ans=push(&s1,num);
+			if(ans==-1)
+				printf("\n STACK IS FULL\n");
+		}
+		else if(cho==2)
+		{
+			ans=pop(&s1);
+			if(ans==-1)
+				printf("\n STACK IS EMPTY\n");
+			else if(ans!=-1)
+				printf("%d DELETED",ans);
+		}
+		else if(cho==3)
+			display(&s1);
+		else if(cho==4)
+			return 1;
+	}
+}

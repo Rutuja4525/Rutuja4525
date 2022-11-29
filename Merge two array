@@ -1,0 +1,55 @@
+#include<stdio.h>
+int main()
+{
+int arr1[10]={10,20,30,40,50,60,70,80,90,100};
+int arr2[10]={1,2,35,45,55,65,90,180,190,1100};
+int arr3[20];
+merge_arr(arr3,arr1,10,arr2,10);
+disparray(arr3,20);
+
+
+}
+int disparray(int arr3[],int size)
+{
+int a;
+printf("\n");
+for(a=0;a<size;a++)
+ printf("%d\t",arr3[a]);
+ 
+printf("\n");
+}
+int merge_arr(int arr3[],int arr1[],int size1,int arr2[],int size2)
+{
+int a=0,b=0,c=0,d;
+while(a<size1 && b<size2)
+{
+if(arr1[a]<=arr2[b])
+{
+arr3[c]=arr1[a];
+a++;
+c++;
+}
+else
+{
+arr3[c]=arr2[b];
+b++;
+c++;
+}
+
+}
+
+while(a<size1)
+{
+arr3[c]=arr1[a];
+c++;
+a++;
+
+}
+
+while(b<size2)
+{
+arr3[c]=arr2[b];
+b++;
+c++;
+}
+}

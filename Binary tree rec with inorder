@@ -1,0 +1,49 @@
+#include<stdio.h>
+struct btnode
+{
+struct btnode *lc;
+int data;
+struct btnode *rc;
+
+};
+main()
+{
+struct btnode *bt;
+bt=NULL;
+insert(&bt,10);
+insert(&bt,6);
+insert(&bt,8);
+insert(&bt,15);
+insert(&bt,20);
+printf("\nInorder \n");
+inorder(&bt);
+
+}
+
+insert(struct btnode **p,int num)
+{
+if(*p==NULL)
+{
+*p = (struct btnode* ) malloc(sizeof(struct btnode));
+(*p)->lc=NULL;
+(*p)->rc=NULL;
+(*p)->data=num;
+}
+else
+{
+if(num < (*p)->data)
+   insert(&((*p)->lc),num);
+else
+   insert(&((*p)->rc),num);
+}
+}
+
+inorder(struct btnode *p)
+{
+if(p!=NULL)
+{
+inorder(p->lc);
+printf("\t%d",p->data);
+inorder(p->rc);
+}
+}

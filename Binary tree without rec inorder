@@ -4,75 +4,59 @@
 #define FALSE 0
 struct btnode
 {
-struct btnode *lc;
-int data;
-struct btnode *rc;
+    struct btnode *lc;
+    int data;
+    struct btnode *rc;
 };
+int insert(struct btnode **pt,int num)
+{
+    struct btnode *t,*p,*c;
+    t=  malloc(sizeof(struct btnode));
+    t->data=num;
+    t->lc=NULL;
+    t->rc=NULL;
+    if(*pt == NULL)
+      *pt=t;
+    else
+    {
+        p=c=*pt;
+        while(c!=NULL)
+        {
+            p=c;
+            if(num < p->data)
+                c=p->lc;
+            else
+                c=p->rc;
+        }
+        if(num < p->data)
+            p->lc=t;
+        else
+            p->rc=t;
+    }
+}
+
+int inorder(struct btnode *p)
+{
+    if(p != NULL)
+    {
+    inorder(p->lc);
+    printf("\t%d ",p->data);
+    inorder(p->rc);
+    }
+}
 int main()
 {
-struct btnode *bt;
-bt=NULL;
-insert(&bt,11);
-insert(&bt,7);
-insert(&bt,10);
-insert(&bt,14);
-insert(&bt,5);
-insert(&bt,9);
-insert(&bt,12);
+    struct btnode *bt;
+    bt=NULL;
+    insert(&bt,11);
+    insert(&bt,7);
+    insert(&bt,10);
+    insert(&bt,14);
+    insert(&bt,5);
+    insert(&bt,9);
+    insert(&bt,12);
 
     printf("\nInorder .... \n");
     inorder(bt);
-
-
 }
 
-
-insert(struct btnode **pt,int num)
-{
-struct btnode *t,*p,*c;
-t=  malloc(sizeof(struct btnode));
-t->data=num;
-t->lc=NULL;
-t->rc=NULL;
-if(*pt == NULL)
-  *pt=t;
-else
-{
-p=c=*pt;
-while(c!=NULL)
-{
-p=c;
-if(num < p->data)
-{
-c=p->lc;
-}
-else
-{
-c=p->rc;
-}
-
-}
-
-if(num < p->data)
-{
-p->lc=t;
-}
-else
-{
-p->rc=t;
-}
-}	
-
-}
-
-
-
-inorder(struct btnode *p)
-{
-if(p != NULL)
-{
-inorder(p->lc);
-printf("\t%d ",p->data);
-inorder(p->rc);
-}
-}

@@ -1,0 +1,166 @@
+#include<stdio.h>
+#include<malloc.h>
+#define TRUE 1
+#define FALSE 0
+struct btnode
+{
+	struct btnode *lc;
+	int data;
+	struct btnode *rc;
+};
+int insert(struct btnode **pt,int num)
+{
+	struct btnode *t,*p,*c;
+	t=  malloc(sizeof(struct btnode));
+	t->data=num;
+	t->lc=NULL;
+	t->rc=NULL;
+	if(*pt == NULL)
+	  *pt=t;
+	else
+	{
+		p=c=*pt;
+		while(c!=NULL)
+		{
+			p=c;
+			if(num < p->data)
+				c=p->lc;
+			else
+				c=p->rc;
+		}
+		if(num < p->data)
+			p->lc=t;
+		else
+			p->rc=t;
+	}
+
+}
+void inorder(struct btnode *p)
+{
+	if(p != NULL)
+	{
+		inorder(p->lc);
+		printf("\t%d ",p->data);
+		inorder(p->rc);
+	}
+}
+
+
+void preorder(struct btnode *p)
+{
+	if(p != NULL)
+	{
+		printf("\t%d ",p->data);
+		preorder(p->lc);
+		preorder(p->rc);
+	}
+}
+
+void postorder(struct btnode *p)
+{
+	if(p != NULL)
+	{
+		postorder(p->lc);
+		postorder(p->rc);
+		printf("\t%d ",p->data);
+	}
+}
+
+
+int delete1(struct btnode **pt,int num)
+{
+	struct btnode *p,*c,*csucc,*t;
+	int found;
+	if(*pt == NULL)
+	{
+	printf("\nTree is empty \n");
+	return;
+	}
+
+	found=search(pt,num,&p,&c);
+
+	if(found == FALSE)
+	{
+	printf("\nData Not Found\n");
+	return;
+	}
+
+
+	if(c->lc !=NULL && c->rc !=NULL)
+	{
+	p=c;
+	csucc=c->rc;
+	while(csucc->lc !=NULL)
+	{
+	p=csucc;
+	csucc=csucc->lc;
+	}
+		c->data=csucc->data;
+		c=csucc;
+	}
+
+	if(c->lc==NULL && c->rc == NULL)
+	 t=NULL;
+
+	if(c->lc==NULL && c->rc != NULL)
+	  t=c->rc;
+
+	if(c->lc != NULL && c->rc == NULL)
+	  t=c->lc;
+
+	if(p->lc ==c)
+	  p->lc=t;
+	else
+	 p->rc=t;
+
+	free(c);
+
+	}
+
+int search(struct btnode **pt,int num, struct btnode **p,struct btnode **pc )
+{
+	struct btnode *q;
+	q=*pt;
+	while(q!=NULL)
+	{
+		if(q->data== num)
+		{
+		*pc=q;
+		return TRUE;
+		}
+			*p=q;
+			if(num<q->data)
+			q=q->lc;
+			else
+			q=q->rc;
+	}
+	return FALSE;
+}
+int main()
+{
+	struct btnode *bt;
+	bt=NULL;
+	insert(&bt,11);
+	insert(&bt,7);
+	insert(&bt,10);
+	insert(&bt,14);
+	insert(&bt,5);
+	insert(&bt,9);
+	insert(&bt,12);
+
+    printf("\nInorder .... \n");
+    inorder(bt);
+    printf("\nPre Order .... \n");
+    preorder(bt);
+    printf("\nPost Order .... \n");
+    postorder(bt);
+
+	delete1(&bt,7);
+	delete1(&bt,11);
+	printf("\nInorder .... \n");
+    inorder(bt);
+
+}
+
+
+

@@ -1,0 +1,100 @@
+#include<stdio.h>
+#define MAX 20
+void insert(int list[],int item,int size)
+{
+  	int index;
+	index=item%size;
+
+	if(list[index]==-1)
+		list[index]=item;
+
+	else
+	{
+		while(list[index]!= -1 && index<size)
+		{
+			index=(index+1)%size;
+		}
+		if(list[index]==-1)
+		{
+	
+			list[index]=item;
+		}
+		
+	
+	else
+	{
+		printf("\nLIST IS FULL");
+	}
+}
+}
+void display(int list[],int size)
+{
+	int i;
+	for(i=0;i < size;i++)
+	{
+		printf("%d \t",list[i]);
+	}
+}
+void search(int list[],int item,int size)
+{
+	int index;
+	index=item%size;
+
+	if(list[index]==item)
+		printf("\nLOCATION OF ITEM IS %d",index);
+
+	else
+	{
+		while(list[index]!= -1 && index<size)
+		{
+			index=(index+1)%size;
+		}
+		if(list[index]==item)
+		{
+	
+			printf("\nLOCATION OF ITEM IS %d",index);
+		}
+	        else
+			printf("\nNOT FOUND ITEM");
+	}
+}
+int main()
+{
+	int list[MAX];
+	int ele,size,cho,i;
+	printf("\nENTER SIZE OF LIST: ");
+	scanf("%d",&size);
+	
+	for(i=0;i < size;i++)
+	{
+		list[i]=-1;
+	}
+	
+	while(1)
+	{
+		printf("\n1.INSERT");
+    		printf("\n2.SEARCH");
+		printf("\n3.DISPLAY");
+		printf("\n4.EXIT");
+
+		printf("\nENTER YOUR CHOICE--->");
+		scanf("%d",&cho);
+		
+		if(cho==1)
+		{
+			printf("\nENTER NUMBER TO INSERT: ");
+			scanf("%d",&ele);
+			insert(list,ele,size);
+		}
+		else if(cho==2)
+		{
+			printf("\nENTER NUMBER TO SEARCH: ");
+			scanf("%d",&ele);
+			search(list,ele,size);
+		}	
+    		else if(cho==3)
+			display(list,size);
+		else
+			return 1;
+	}
+}

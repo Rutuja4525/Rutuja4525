@@ -13,12 +13,12 @@ void initq1(struct queue *ptr)
 }
 int isempty(struct queue *ptr)
 {
-  return (ptr->f == ptr->r);
+  return (ptr->f == -1);
 }
 
 int enq(struct queue *ptr,int ele)
 {
-  if(ptr->r == 5)
+  if(ptr->r == 4)
     printf("\n Queue is Full \n");
   else
   {
@@ -37,6 +37,9 @@ int dq(struct queue *ptr)
   int n;
   n=ptr->items[(ptr->f)];
   ptr->f = ptr->f+1;
+  
+  if(ptr->r == ptr->f)
+    initq1(ptr);
   return n;
 }
 void display(struct queue *ptr)
@@ -65,6 +68,7 @@ int main()
    
     if(cho==1)
     {
+       
       printf("\n Enter Element to Enqueue : ");
       scanf("%d",&ele);
      
@@ -91,4 +95,4 @@ int main()
     }
    
    
-  }while(cho>=1 && cho<=3);
+  }while(cho>=1 && cho<=3);}

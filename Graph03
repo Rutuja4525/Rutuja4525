@@ -1,0 +1,215 @@
+/* Program for insertion and deletion of nodes and edges 
+   in a graph using adjacency list */
+#include<stdio.h>
+struct edge
+{
+char dest;
+struct edge *link;
+};
+struct node
+{
+struct node *next;
+char name;
+struct edge *adj;
+
+};
+struct node *start = NULL;
+struct node * find(char item);
+insert_edge(char,char);
+insert_node(char);
+del_edge(char,char);
+int main()
+{
+int choice;
+char node,origin,destin;
+while(1)
+{
+printf("1. Insert a node \n");
+printf("2. Insert an edge\n");
+printf("3. Delete an edge\n");
+printf("4. Display\n");
+printf("5. Exit\n");
+
+printf("\nEnter your choice : ");
+scanf("%d",&choice);
+
+switch(choice)
+{
+case 1:
+printf("Enter a node to be inserted : ");
+fflush(stdin);
+scanf("%c",&node);
+insert_node(node);
+break;
+case 2:
+printf("Enter an edge to be inserted : ");
+fflush(stdin);
+scanf("%c %c",&origin,&destin);
+insert_edge(origin,destin);
+break;
+case 3:
+printf("\nEnter the edge to be deleted : ");
+fflush(stdin);
+scanf("%c %c",&origin,&destin);
+del_edge(origin,destin);
+break;
+case 4:
+display();
+break;
+case 5:
+return 1;
+default:
+printf("\nWrong Choice\n");
+
+}
+}
+}
+
+insert_node(char node_name)
+{
+struct node *tmp,*ptr;
+tmp=malloc(sizeof(struct node));
+tmp->name=node_name;
+tmp->next=NULL;
+tmp->adj=NULL;
+if(start==NULL)
+{
+start=tmp;
+return;
+}
+ptr=start;
+if(ptr->name== node_name)
+{
+printf("\nNode already present ");
+return;
+}
+while(ptr->next != NULL)
+{
+if(ptr->name== node_name)
+{
+printf("\nNode already present ");
+return;
+}
+ptr=ptr->next;
+}
+ptr->next=tmp;
+}
+
+insert_edge(char u,char v)
+{
+struct node *locu,*locv;
+struct edge *ptr,*tmp;
+locu=find(u);
+locv=find(v);
+
+if(locu==NULL)
+{
+printf("Source node not present, first insert node %c\n",u);
+return;
+}
+if(locv==NULL)
+{
+printf("Destination node not present, first insert node %c\n",v);
+}
+
+tmp=malloc(sizeof(struct edge));
+tmp->dest=v;
+tmp->link=NULL;
+
+if(locu->adj==NULL)
+{
+locu->adj=tmp;
+return;
+}
+
+ptr=locu->adj;
+while(ptr->link != NULL)
+{
+ptr=ptr->link;
+}
+ptr->link=tmp;
+}
+
+struct node * find(char item)
+{
+struct node *ptr,*loc;
+ptr=start;
+while(ptr != NULL)
+{
+if(item==ptr->name)
+{
+loc=ptr;
+return loc;
+}
+else
+{
+ptr=ptr->next;
+}
+}
+loc=NULL;
+return loc;
+}
+
+display()
+{
+struct node *ptr;
+struct edge *q;
+ptr=start;
+while(ptr!=NULL)
+{
+printf("%c -> ",ptr->name);
+q=ptr->adj;
+while(q!=NULL)
+{
+printf("%c  ",q->dest);
+q=q->link;
+}
+printf("\n");
+ptr=ptr->next;
+}
+}
+
+
+del_edge(char u,char v)
+{
+struct node *locu,*locv;
+struct edge *ptr,*tmp,*q;
+locu=find(u);
+if(locu==NULL)
+{
+printf("\nSource node not present \n");
+return;
+}
+
+if(locu->adj->dest==v)
+{
+tmp=locu->adj;
+locu ->adj=locu->adj->link;   /* First element deleted */
+free(tmp);
+return;
+
+
+}
+
+q=locu->adj;
+while(q->link->link != NULL)
+{
+if(q->link->dest==v)
+{
+tmp =q->link;
+q->link = tmp->link;
+free(tmp);
+return;
+}
+q=q->link;
+}
+if(q->link->dest==v)
+{
+tmp=q->link;
+free(tmp);
+q->link=NULL;
+return;
+}
+printf("\nThis edge not present in the graph\n");
+
+}

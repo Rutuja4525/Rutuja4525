@@ -1,0 +1,92 @@
+#include<stdio.h>
+struct product
+{
+  char name[10];
+  int id;
+  int price;
+  int gst;
+}obj;
+
+void addinfo()
+{
+  int c;
+  FILE *fp;
+  fp=fopen("mall.txt","a");
+  
+  if(fp==NULL)
+  {
+    printf( "Failed to open mall.txt file");
+  }
+  do
+  {
+    printf("\nEnter Product Name  : ");
+    scanf("%s",&obj.name);
+    
+    printf("\nEnter Product ID    : ");
+    scanf("%d",&obj.id);
+    
+    printf("\nEnter Product Price : ");
+    scanf("%d",&obj.price);
+    
+    printf("\nEnter Product GST   : ");
+    scanf("%d",&obj.gst);
+    
+    fprintf(fp,"%s %d %d %d \n",obj.name,obj.id,obj.price,obj.gst);
+    
+    printf("\n\n");
+    printf("\nDo you want to save another record : y/n : ");
+    fflush(stdin);
+    scanf("%c",&c);
+
+  }while(c=='y' || c=='Y');
+  fclose(fp);
+}
+
+void displayinfo()
+{
+  FILE *fp;
+  fp=fopen("mall.txt","r");
+  
+  if(!fp)
+  {
+    printf( "Failed to open mall.txt file");
+  }
+ while(1)
+  {
+	fscanf(fp,"%s %d %d %d",&obj.name,&obj.id,&obj.price,&obj.gst);
+    if(feof(fp))
+    	break;
+	printf("\nName     : %s",obj.name);
+    printf("\nID       : %d",obj.id);
+    printf("\nPrice    : %d",obj.price);
+    printf("\nGST      : %d",obj.gst);
+    
+  }
+  fclose(fp);
+}
+
+int main()
+{
+    int cho;
+    do
+    {
+      printf("\n1.Add Info");
+      printf("\n2.Delete Info");
+      printf("\n3.Display Info");
+      printf("\n4.Search Info");
+      printf("\n5.Exit");
+      printf("\nEnter Your Choice : ");
+      scanf("%d",&cho);
+      
+      if(cho==1)
+        addinfo();
+      //else if(cho==2)
+      //  deleteinfo();
+      else if(cho==3)
+        displayinfo();
+      //else if(cho==4)
+      //  searchinfo();
+        
+    }while(cho>=1 && cho<=4);
+}
+

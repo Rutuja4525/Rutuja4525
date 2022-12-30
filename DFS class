@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+int v;    
+int adj[4][4];  
+bool visited[4]={false};
+
+void addEdge(int v, int w);
+void DFS(int v);
+
+ 
+void addEdge(int v, int w)
+{
+    adj[v][w]=w;
+    adj[w][v]=v;
+}
+ 
+void DFS(int v)
+{
+    visited[v] = true;
+    printf("%d ",v);
+ 
+    for (int i = 0; i != 4; ++i){
+     int index = adj[v][i];
+     if (!visited[index])
+            DFS(index);  
+    }
+}
+ 
+int main()
+{
+   
+    addEdge(0, 3);
+    addEdge(0, 2);
+    addEdge(0, 1);
+    addEdge(1, 2);
+   
+ 
+    printf("Following is Depth First Traversal (starting from vertex 2) \n");
+ 
+    DFS(0);
+ 
+    return 0;
+}

@@ -1,0 +1,81 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+int v;    
+int adj[4][4];  
+bool visited[4]={false};
+int queue[100];
+int front = -1,rear = -1;
+void enqueue();
+int dequeue();
+
+void addEdge(int v, int w);
+void BFS(int v);
+
+
+void enqueue(int value)
+{
+if(front == -1 && rear == -1)
+front++;
+
+rear++;
+queue[rear] = value;
+}
+int dequeue()
+{
+int ans = queue[front];
+front++;
+return ans;
+}
+bool isEmpty()
+{
+if(front > rear)
+return true;
+return false;
+}
+ 
+void addEdge(int v, int w)
+{
+    adj[v][w]=w;
+    adj[w][v]=v;
+}
+ 
+void BFS(int value)
+{
+    int i = 0;
+enqueue(value);
+while(!isEmpty())
+{
+int v = queue[front];
+for(i=0;i<4;i++)
+{
+int val = adj[v][i];
+if(!visited[val])
+enqueue(val);
+}
+if(!visited[v])
+{
+visited[v] = true;
+printf("%d ",v);	
+}
+dequeue();
+
+}
+
+}
+ 
+int main()
+{
+   
+    addEdge(0, 3);
+    addEdge(0, 2);
+    addEdge(0, 1);
+    addEdge(1, 2);
+   
+ 
+    printf("Following is Depth First Traversal (starting from vertex 2) \n");
+ 
+    BFS(0);
+ 
+    return 0;
+}

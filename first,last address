@@ -1,0 +1,140 @@
+#include<stdio.h>
+#include<string.h>
+#include<math.h>
+void convert_binary(int n)
+{
+	int a[8], i;
+	for(i=0; i<8; i++)
+	{
+		a[i]=n%2;
+		n=n/2;
+	}
+	for(i=7; i>-1; i--)
+	{
+		printf("%d", a[i]);
+	}
+}
+int no_address(int j, int k)
+{
+	double result;
+	result=pow(j,k);
+
+	return (result);
+}
+	
+void main()
+{
+ 	char ip[16];
+	int a1=0, a2=0, a3=0, a4=0;
+	int b1=0, b2=0, b3=0, b4=0;
+	printf("Enter the IP adress :");
+	scanf("%s",ip);
+	int n=1,ele;
+	int s1=0,s2=0,s3=0,s4=0;
+	int i=strlen(ip)-1;
+	double b;
+
+	while(ip[i]!='.')
+	{
+	 ele=ip[i];
+	 ele=(ele-48)*n;
+	 s4=s4+ele;
+	 n=n*10;
+	 i--;
+	}
+	i=i-1;
+	n=1;
+	
+	while(ip[i]!='.')
+	{
+	 ele=ip[i];
+	 ele=(ele-48)*n;
+	 s3=ele+s3;
+	 n=n*10;
+	 i--;
+	}
+	i=i-1;
+	n=1;
+	
+	while(ip[i]!='.')
+	{
+	 ele=ip[i];
+	 ele=(ele-48)*n;
+	 s2=ele+s2;
+	 n=n*10;
+	 i--;
+	}
+	i=i-1;
+	n=1;
+	
+	while(i>-1)
+	{
+	 ele=ip[i];
+	 ele=(ele-48)*n;
+	 s1=s1+ele;
+	 n=n*10;
+	 i--;
+	}	
+	printf("\n IP address in Binary: ");
+	convert_binary(s1);
+		printf(".");
+	convert_binary(s2);
+		printf(".");
+	convert_binary(s3);
+		printf(".");
+	convert_binary(s4);
+	
+	//CLASS A	
+	if(s1>255 || s2>255 || s3>255 || s4>255)
+	printf("\n INVALID IP ADRESSS");
+	
+	if(s1>=1 && s1<=127)
+	{
+	  a1=255, a2=0, a3=0, a4=0;
+	  b1=0, b2=255, b3=255, b4=255;
+	  printf("\n CLASS : A");
+	  printf("\n FIRST IP ADDRESS: %d.%d.%d.%d",s1&a1, s2&a2, s3&a3, s4&a4);
+	  printf("\n LAST IP ADDRESS: %d.%d.%d.%d", s1|b1, s2|b2, s3|b3, s4|b4); 
+		b=no_address(2, 24);
+	  printf("\n NUMBER OF ADRESSES IN EACH BLOCK: %.0lf", b);
+		b=no_address(2, 7);
+	  printf("\n NUMBER OF BLOCKS : %.0lf \n", b);  
+	}
+	//CLASS B
+	else if(s1>=128 && s1<=191 )
+	{
+	    a1=255, a2=255, a3=0, a4=0;
+	    b1=0, b2=0, b3=255, b4=255;
+	    printf("\n CLASS : B");
+		printf("\n FIRST IP ADDRESS: %d.%d.%d.%d",s1&a1, s2&a2, s3&a3, s4&a4);
+	  	printf("\n LAST IP ADDRESS: %d.%d.%d.%d", s1|b1, s2|b2, s3|b3, s4|b4);
+	     b=no_address(2, 16);
+	   	printf("\n NUMBER OF ADRESSES IN EACH BLOCK: %.0lf", b);
+		 b=no_address(2, 14);
+	   	printf("\n NUMBER OF BLOCKS : %.0lf \n", b);  
+	}
+	//CLASS C	
+	else if(s1>=192 && s1<=223 )
+	{
+	    a1=255, a2=255, a3=255, a4=0;
+	    b1=0, b2=0, b3=0, b4=255;
+	    printf("\n CLASS : C");
+    	printf("\n FIRST IP ADDRESS: %d.%d.%d.%d",s1&a1, s2&a2, s3&a3, s4&a4);
+	    printf("\n LAST IP ADDRESS: %d.%d.%d.%d", s1|b1, s2|b2, s3|b3, s4|b4);
+	       b=no_address(2, 8);
+	    printf("\n NUMBER OF ADRESSES IN EACH BLOCK: %.01lf", b);
+		   b=no_address(2, 21);
+	    printf("\n NUMBER OF BLOCKS : %.0lf \n", b);  
+	}	
+	//CLASS D	
+	else if(s1>=224 && s1<=239 )
+	{
+	  printf("\n CLASS : D");
+	  printf("\n CLASS D is reserved for broadcast");
+    }
+	else if(s1>=240||s1<=255)
+	{
+	  printf("\n CLASS : E \n");
+	  printf("\n This class is reserved for future use");
+	}
+}

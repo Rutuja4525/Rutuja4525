@@ -1,0 +1,97 @@
+#include<stdio.h>
+#include<string.h>
+#define MAX 100
+void sender_bit_stuffing(int size, int data[], int bit[])
+{
+    int i, j, k, count;
+    i=0; j=0;
+    count=1;
+    while(i<size)
+    {
+        if(data[i]==1)
+        {
+            bit[j]=data[i];
+
+            for(k=i+1; data[k]==1 && k<size && count<5; k++)
+            {
+                j++;
+                bit[j]=data[i];
+                count++;
+                if(count==5)
+                {
+                    j++;
+                    bit[j]=0;
+                }
+                i=k;
+            }
+        }
+        else
+            bit[j]=data[i];
+
+        j++;
+        i++;
+		count=1;
+    }
+    printf("\nSENDER SIDE DATA IS :");
+    for(i=0; i<j; i++)
+    {
+        printf("%d", bit[i]);
+    }
+}
+void recevier_bit_stuffing(int size, int data[], int bit[])
+{
+    int count=0;
+	int k=0;
+	int i=0;
+
+	while(k<size)
+  	{
+   	 	if(bit[k]==0)
+    	{
+      		data[i]=bit[k];
+      		i++;
+      		k++;
+    	}
+    	else
+    	{
+      		while(bit[k]==1 && count!=5)
+      		{
+        		count++;
+        		data[i]=bit[k];
+        		i++;
+        		k++;
+      		}
+      		if(count==5)
+      		{
+       			 k++;
+      		}
+      		count=0;
+    	}
+   }
+	printf("\nRECEIVER SIDE DATA IS:");
+	for(i=0;i<size;i++)
+	{
+		printf("%d",data[i]);
+	}
+	printf("\n");
+}
+int main()
+{
+    int data[MAX], bit[MAX];
+    int size, i, j, choice=0;
+    printf("\nENTER DATA SIZE:");
+	scanf("%d", &size);
+	printf("\nENTER DATA (0/1):\n");
+	for(i=0; i<size; i++)
+	{
+		scanf("%d", &data[i]);
+	}
+
+	// Senders side
+	sender_bit_stuffing(size, data, bit);
+	// Reciever side
+	recevier_bit_stuffing(size, data, bit);
+
+
+    return 0;
+}

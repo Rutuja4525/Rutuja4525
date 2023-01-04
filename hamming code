@@ -1,0 +1,98 @@
+#include<stdio.h>
+#include<math.h>
+int power(int a)
+{
+	int result=pow(2,a);
+	return result;
+}
+int main()
+{
+  int i=0,data[16],cho,h,ham[12],j=0,index=0,flag=0,xyz=0;
+while(1)
+{
+  printf("\n1.EVEN PARITY");
+  printf("\n2.ODD PARITY");
+  printf("\n3.RECEIVER HAMMING CODE");
+  printf("\n4.EXIT");
+
+	printf("\nENTER YOUR CHOICE: ");
+	scanf("%d",&cho);
+
+	if(cho==1)
+  	{
+  	    printf("\nEnter 8 bit data:");
+        scanf("%d %d %d %d %d %d %d %d",&data[2],&data[4],&data[5],&data[6],&data[8],&data[9],&data[10],&data[11]);
+		h=power(0);
+		data[h-1]=(data[2]^data[4]^data[6]^data[8]^data[10]);
+    	h=power(1);
+  	data[h-1]=(data[2]^data[5]^data[6]^data[9]^data[10]);
+		h=power(2);
+  	data[h-1]=(data[4]^data[5]^data[6]^data[11]);
+		h=power(3);
+  	data[h-1]=(data[8]^data[9]^data[10]^data[11]);
+
+  	printf("\nHamming code is:");
+  	for(i=0;i<12;i++)
+  	{
+    	printf("%d",data[i]);
+  	}
+
+	}
+	else if(cho==2)
+	{
+	    printf("\nEnter 8 bit data:");
+        scanf("%d %d %d %d %d %d %d %d",&data[2],&data[4],&data[5],&data[6],&data[8],&data[9],&data[10],&data[11]);
+		h=power(0);
+		data[h-1]=!(data[2]^data[4]^data[6]^data[8]^data[10]);
+    h=power(1);
+  	data[h-1]=!(data[2]^data[5]^data[6]^data[9]^data[10]);
+		h=power(2);
+  	data[h-1]=!(data[4]^data[5]^data[6]^data[11]);
+		h=power(3);
+  	data[h-1]=!(data[8]^data[9]^data[10]^data[11]);
+
+  	printf("\nHamming code is:");
+  	for(i=0;i<12;i++)
+  	{
+    	printf("%d",data[i]);
+  	}
+	}
+	else if(cho==3)
+	{
+	    printf("\nENTER RECEIVER HAMMING CODE: ");
+	    for(j=0;j<12;j++)
+	    {
+		scanf("%d",&ham[j]);
+	    }
+
+		while(data[i] == ham[j])
+		{
+			i++;
+			j++;
+
+		}
+		  printf("\n ERROR FREE HAMMING CODE ");
+		index=j;
+
+
+		ham[index]=!(ham[0]^ham[1]^ham[2]^ham[7]);
+
+		ham[j]=ham[index];
+	printf(" f=%d",ham[index]);
+		   printf("\n CORRECTED HAMMING CODE :");
+    		   for(j=0;j<12;j++)
+   			printf("%d",ham[j]);
+
+	}
+	else if(cho==4)
+    {
+        return 1;
+    }
+	 else
+	{
+		printf("WRONG CHOICE...!");
+	}
+
+
+}
+}

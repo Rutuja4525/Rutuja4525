@@ -1,0 +1,264 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node
+{
+	struct node *previous;
+	int data;
+	struct node *next;
+};
+
+struct node *create_node(int num);
+void add_at_begin(int num,struct node **q);
+void add_at_mid(int num,int pos,struct node **q);
+void add_at_end(int num,struct node **q);
+void del_at_begin(struct node **q);
+void del_at_mid(int pos,struct node **q);
+void del_at_end(struct node **q);
+void display(struct node *head);
+int node_count(struct node *head);
+
+void main()
+{
+	struct node *head=NULL;
+	int num,pos,choice,cnt;
+	while(1)
+	{
+		printf("\n1]Insert at beginning");
+		printf("\n2]Insert at middle");
+		printf("\n3]Insert at end");
+		printf("\n4]Delete at beginning");
+		printf("\n5]Delete at middle");
+		printf("\n6]Delete at end");
+		printf("\n7]Display");
+		printf("\n8]Node count");
+		printf("\n9]Exit");	
+		printf("\nEnter choice:-");
+		scanf("%d",&choice);
+		
+		switch(choice)
+		{
+			case 1:printf("\nEnter node value:-");
+				   scanf("%d",&num);
+				   add_at_begin(num,&head);
+				   break;
+			case 2:printf("\nEnter node value:-");
+				   scanf("%d",&num);
+				   printf("\nEnter position:-");
+				   scanf("%d",&pos);
+				   add_at_mid(num,pos,&head);
+				   break;
+		    case 3:printf("\nEnter node value:-");
+				   scanf("%d",&num);
+				   add_at_end(num,&head);
+				   break;
+		    case 4:del_at_begin(&head);
+				   break;
+		    case 5:printf("\nEnter position:-");
+				   scanf("%d",&pos);
+				   del_at_mid(pos,&head);
+				   break;
+		    case 6:del_at_end(&head);
+				   break;
+		    case 7:display(head);
+		    	   break;
+		    case 8:cnt=node_count(head);
+		           printf("\nNumber of nodes=%d",cnt);
+		           break;
+		    case 9:exit(0);
+		           break;
+		    default:printf("\nInvalid choice");
+		}
+	}	
+}
+
+struct node *create_node(int num)
+{
+	struct node *temp;
+	temp=(struct node *)malloc(sizeof(struct node));
+	temp->data=num;
+	temp->previous=NULL;
+	temp->next=NULL;
+	return temp;
+}
+
+void add_at_begin(int num,struct node **q)
+{
+	struct node * temp;
+	temp=create_node(num);
+	if(*q==NULL)
+	{
+		*q=temp;
+		return;
+	}
+	else
+	{
+		temp->next=*q;
+		(*q)->previous=temp;
+		*q=temp;
+	}
+}
+
+void add_at_mid(int num,int pos,struct node **q)
+{
+	struct node * temp,*p;
+	int i;
+	temp=create_node(num);
+	if(*q==NULL)
+	{
+		*q=temp;
+		return;
+	}
+	else
+	{
+		p=*q;
+		for(i=1;i<pos-1;i++)
+		{
+			if(p->next==NULL)
+			{
+				printf("\nInsufficient nodes");
+				return;
+			}
+			else
+			{
+				p=p->next;
+			}
+		}
+		temp->previous=p;
+		temp->next=p->next;
+		p->next->previous=temp;
+		p->next=temp;
+	}
+}
+
+
+void add_at_end(int num,struct node **q)
+{
+	struct node * temp,*p;
+	temp=create_node(num);
+	if(*q==NULL)
+	{
+		*q=temp;
+		return;
+	}
+	else
+	{
+		p=*q;
+		while(p->next!=NULL)
+		{
+			p=p->next;
+		}
+		temp->previous=p;
+		p->next=temp;
+	}
+}
+
+void del_at_begin(struct node **q)
+{
+	struct node *temp;
+	if(*q==NULL)
+	{
+		printf("\nList is Empty");
+		return;	
+	}	
+	else
+	{
+		temp=*q;
+		(*q)->next->previous=NULL;
+		*q=temp->next;
+		free(temp);
+	}
+}
+
+
+void del_at_mid(int pos,struct node **q)
+{
+	int i;
+	struct node *temp;
+	if(*q==NULL)
+	{
+		printf("\nList is Empty");
+		return;
+	}
+	else
+	{
+		temp=*q;
+		for(i=0;i<pos-1;i++)
+		{
+			if(temp->next==NULL)
+			{
+				printf("\nInsufficient nodes");
+				return;
+			}
+			else
+			{
+				temp=temp->next;
+			}
+		}
+		temp->previous->next=temp->next;
+		temp->next->previous=temp->previous;
+		free(temp);
+	}
+}
+
+
+void del_at_end(struct node **q)
+{
+	struct node *temp,*p;
+	if(*q==NULL)
+	{
+		printf("\nList is Empty");
+		return;	
+	}	
+	else
+	{
+		temp=*q;
+		while(temp->next!=NULL)
+		{
+			temp=temp->next;
+		}
+	    temp->previous->next=NULL;
+		free(temp);
+	}	
+}
+
+
+void display(struct node *head)
+{
+	struct node *p;
+	if(head==NULL)
+	{
+		printf("\nList is Empty");
+		return;
+	}
+	else
+	{
+		p=head;
+		while(p!=NULL)
+		{
+			printf("%d\t",p->data);
+			p=p->next;
+		}
+	}
+}
+
+int node_count(struct node *head)
+{
+	struct node *p;
+	int cnt=0;
+	if(head==NULL)
+	{
+		printf("\nList is Empty");
+		return;
+	}
+	else
+	{
+		p=head;
+		while(p!=NULL)
+		{
+			cnt++;
+			p=p->next;
+		}
+	}
+	return cnt;
+}
